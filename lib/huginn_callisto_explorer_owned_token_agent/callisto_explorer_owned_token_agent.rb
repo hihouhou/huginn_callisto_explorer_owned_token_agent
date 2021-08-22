@@ -22,14 +22,15 @@ module Agents
 
     event_description <<-MD
       Events look like this:
-        {
-          "balance": "13641540356782800000000",
-          "contractAddress": "0x1eaa43544daa399b87eecfcc6fa579d5ea4a6187",
-          "decimals": "18",
-          "name": "Callisto Enterprise",
-          "symbol": "CLOE",
-          "type": "ERC-20"
-        }
+
+          {
+            "balance": "13641540356782800000000",
+            "contractAddress": "0x1eaa43544daa399b87eecfcc6fa579d5ea4a6187",
+            "decimals": "18",
+            "name": "Callisto Enterprise",
+            "symbol": "CLOE",
+            "type": "ERC-20"
+          }
     MD
 
     def default_options
