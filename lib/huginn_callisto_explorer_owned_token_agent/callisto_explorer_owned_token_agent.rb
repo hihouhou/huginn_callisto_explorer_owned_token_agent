@@ -71,7 +71,7 @@ module Agents
     private
 
     def fetch
-      uri = URI.parse("https://explorer.callisto.network/api?module=account&action=tokenlist&address=0x6811164c90Cdd153E337B513064dB69C1540BE1b")
+      uri = URI.parse("https://explorer.callisto.network/api?module=account&action=tokenlist&address=#{interpolated['wallet']}")
       request = Net::HTTP::Get.new(uri)
       request["Accept"] = "application/json"
       
