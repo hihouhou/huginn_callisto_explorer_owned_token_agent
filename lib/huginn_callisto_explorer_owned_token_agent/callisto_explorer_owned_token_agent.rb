@@ -123,7 +123,7 @@ module Agents
                     log "found is #{found}! so token created"
                     log token
                   end
-                  create_token payload: token
+                  create_event payload: token
                 end
               end
             end
@@ -132,7 +132,7 @@ module Agents
         end
       else
         if !payload.empty?
-          create_token payload: payload['result']
+          create_event payload: payload['result']
           if payload.to_s != memory['last_status']
             memory['last_status'] = payload.to_s
           end
