@@ -3,7 +3,7 @@ module Agents
     include FormConfigurable
     can_dry_run!
     no_bulk_receive!
-    default_schedule '1h'
+    default_schedule 'every_1h'
 
     description do
       <<-MD
@@ -104,16 +104,16 @@ module Agents
         if payload.to_s != memory['last_status']
           if payload
             if "#{memory['last_status']}" == ''
-              payload['result'].each do |event|
+              payload['result'].each do |token|
                 if interpolated['debug'] == 'true'
-                  log event
+                  log token
                 end
                 if interpolated['decimal'] == 'true'
                   power = 10 ** token['decimal'].to_i
-                  value = event['balance'].to_f / power.to_i
-                  event.merge!({ :value => value })
+                  value = token['balance'].to_f / power.to_i
+                  token.merge!({ "value" => value })
                 end
-                create_event payload: event
+                create_event payload: token
               end
             else
               last_status = memory['last_status'].gsub("=>", ": ").gsub(":nil,", ": null,")
@@ -125,6 +125,11 @@ module Agents
                   log token
                 end
                 last_status['result'].each do |tokenbis|
+                  if interpolated['decimal'] == 'true'
+                    power = 10 ** token['decimal'].to_i
+                    value = token['balance'].to_f / power.to_i
+                    token.merge!({ "value" => value })
+                  end
                   if token == tokenbis
                     found = true
                   end
@@ -136,11 +141,6 @@ module Agents
                   if interpolated['debug'] == 'true'
                     log "found is #{found}! so token created"
                     log token
-                  end
-                  if interpolated['decimal'] == 'true'
-                    power = 10 ** token['decimal'].to_i
-                    value = token['balance'].to_f / power.to_i
-                    token.merge!({ :value => value })
                   end
                   create_event payload: token
                 end
