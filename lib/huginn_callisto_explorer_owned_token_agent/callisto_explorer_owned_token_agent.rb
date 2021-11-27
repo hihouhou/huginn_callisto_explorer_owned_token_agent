@@ -95,8 +95,10 @@ module Agents
       log "fetch event request status : #{response.code}"
     
       payload = JSON.parse(response.body)
+      parsed = JSON.parse(response.body)
 
       if interpolated['debug'] == 'true'
+        log "payload"
         log payload
       end
 
@@ -104,7 +106,7 @@ module Agents
         if payload.to_s != memory['last_status']
           if payload
             if "#{memory['last_status']}" == ''
-              payload['result'].each do |token|
+              parsed['result'].each do |token|
                 if interpolated['debug'] == 'true'
                   log token
                 end
@@ -118,7 +120,7 @@ module Agents
             else
               last_status = memory['last_status'].gsub("=>", ": ").gsub(":nil,", ": null,")
               last_status = JSON.parse(last_status)
-              payload['result'].each do |token|
+              parsed['result'].each do |token|
                 found = false
                 if interpolated['debug'] == 'true'
                   log "found is #{found}!"
