@@ -113,7 +113,7 @@ module Agents
                 if interpolated['decimal'] == 'true'
                   power = 10 ** token['decimal'].to_i
                   value = token['balance'].to_f / power.to_i
-                  token.merge!({ "value" => value })
+                  token.merge!({ "value" => "#{value}" })
                 end
                 create_event payload: token
               end
@@ -130,7 +130,7 @@ module Agents
                   if interpolated['decimal'] == 'true'
                     power = 10 ** token['decimal'].to_i
                     value = token['balance'].to_f / power.to_i
-                    token.merge!({ "value" => value })
+                    token.merge!({ "value" => "#{value}" })
                   end
                   if token == tokenbis
                     found = true
