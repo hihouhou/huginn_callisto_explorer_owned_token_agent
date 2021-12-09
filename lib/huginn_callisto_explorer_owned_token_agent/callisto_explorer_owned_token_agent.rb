@@ -111,7 +111,7 @@ module Agents
                   log token
                 end
                 if interpolated['decimal'] == 'true'
-                  power = 10 ** token['decimal'].to_i
+                  power = 10 ** token['decimals'].to_i
                   value = token['balance'].to_f / power.to_i
                   token.merge!({ "value" => "#{value}" })
                 end
@@ -127,13 +127,13 @@ module Agents
                   log token
                 end
                 last_status['result'].each do |tokenbis|
-                  if interpolated['decimal'] == 'true'
-                    power = 10 ** token['decimal'].to_i
-                    value = token['balance'].to_f / power.to_i
-                    token.merge!({ "value" => "#{value}" })
-                  end
                   if token == tokenbis
                     found = true
+                  end
+                  if interpolated['decimal'] == 'true'
+                    power = 10 ** token['decimals'].to_i
+                    value = token['balance'].to_f / power.to_i
+                    token.merge!({ "value" => "#{value}" })
                   end
                   if interpolated['debug'] == 'true'
                     log "found is #{found}!"
