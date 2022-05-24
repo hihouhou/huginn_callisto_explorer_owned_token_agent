@@ -130,19 +130,21 @@ module Agents
                   if token == tokenbis
                     found = true
                   end
-                  if interpolated['decimal'] == 'true'
-                    power = 10 ** token['decimals'].to_i
-                    value = token['balance'].to_f / power.to_i
-                    token.merge!({ "value" => "#{value}" })
-                  end
                   if interpolated['debug'] == 'true'
                     log "found is #{found}!"
+                    log "tokenbis"
+                    log tokenbis
                   end
                 end
                 if found == false
                   if interpolated['debug'] == 'true'
                     log "found is #{found}! so token created"
                     log token
+                  end
+                  if interpolated['decimal'] == 'true'
+                    power = 10 ** token['decimals'].to_i
+                    value = token['balance'].to_f / power.to_i
+                    token.merge!({ "value" => "#{value}" })
                   end
                   create_event payload: token
                 end
